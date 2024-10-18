@@ -1,6 +1,6 @@
 #
 #
-Dir[File.join(__dir__, 'lib/pieces' '*.rb')].each { |file| require_relative file }
+require_relative './pieces/rook.rb'
 #
 class ChessBoard
   attr_reader :board
