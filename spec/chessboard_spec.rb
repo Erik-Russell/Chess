@@ -15,4 +15,19 @@ describe ChessBoard do
     end
   end
 
+  describe 'place_pieces' do
+    subject(:board) { ChessBoard.new }
+    it 'places a white rook at a1' do
+      white_rook1 = board.piece_at([7,0])
+      expect(white_rook1).to be_an_instance_of(Rook)
+      expect(white_rook1.color).to eq(:white)
+    end
+
+    it 'places a black rook at a8' do
+      black_rook1 = board.piece_at([0,0])
+      expect(black_rook1).to be_an_instance_of(Rook)
+      expect(black_rook1.color).to eq(:black)
+    end
+
+  end
 end
