@@ -13,4 +13,8 @@ class Piece
   def valid_moves
     raise NotImplementedError, "This method should be overridden by subclasses."
   end
+
+  def to_s
+    symbol
+  end
 end
