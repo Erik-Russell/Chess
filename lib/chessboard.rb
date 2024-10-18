@@ -34,6 +34,11 @@ class ChessBoard
     @board[0][7] = Rook.new(:black,[0, 7])
   end
 
+  def place_piece(piece, position)
+    row, col = position
+    @board[row][col] = piece
+  end
+
   def piece_at(position)
     row, col = position
     @board[row][col]
