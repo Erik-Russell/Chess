@@ -12,13 +12,13 @@ class ChessBoard
   end
 
   def display
-    puts '   a   b   c   d   e   f   g   h'
+    puts "\n\n\n    a   b   c   d   e   f   g   h"
     @board.each_with_index do |row, index|
       puts "  +---+---+---+---+---+---+---+---+"
       puts "#{8 - index} | " + row.join(" | ") + " | #{8 - index}"
     end
     puts "  +---+---+---+---+---+---+---+---+"
-    puts "   a   b   c   d   e   f   g   h"
+    puts "    a   b   c   d   e   f   g   h"
   end
 
 end
