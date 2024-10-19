@@ -30,7 +30,7 @@ class King < Piece
   end
 
   def symbol
-    if color = :white
+    if color == :white
       "\u2654"
     else
       "\u265A"
