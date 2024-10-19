@@ -76,6 +76,12 @@ describe ChessBoard do
       expect(black_king).to be_an_instance_of(King)
       expect(black_king.color).to eq(:black)
     end
+
+    it 'places a white pawn at a2' do
+      white_pawn = board.piece_at([6, 0])
+      expect(white_pawn).to be_an_instance_of(Pawn)
+      expect(white_pawn.color).to eq(:white)
+    end
   end
 end
 

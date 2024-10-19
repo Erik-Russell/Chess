@@ -5,6 +5,7 @@ require_relative './pieces/bishop.rb'
 require_relative './pieces/knight.rb'
 require_relative './pieces/queen.rb'
 require_relative './pieces/king.rb'
+require_relative './pieces/pawn.rb'
 #
 class ChessBoard
   attr_reader :board
@@ -56,6 +57,24 @@ class ChessBoard
     @board[7][4] = King.new(:white,[7, 4])
     # black king
     @board[0][4] = King.new(:black,[0, 4])
+    # white pawns
+    @board[6][0] = Pawn.new(:white, [6, 0])
+    @board[6][1] = Pawn.new(:white, [6, 1])
+    @board[6][2] = Pawn.new(:white, [6, 2])
+    @board[6][3] = Pawn.new(:white, [6, 3])
+    @board[6][4] = Pawn.new(:white, [6, 4])
+    @board[6][5] = Pawn.new(:white, [6, 5])
+    @board[6][6] = Pawn.new(:white, [6, 6])
+    @board[6][7] = Pawn.new(:white, [6, 7])
+    # black pawns
+    @board[1][0] = Pawn.new(:black, [1, 0])
+    @board[1][1] = Pawn.new(:black, [1, 1])
+    @board[1][2] = Pawn.new(:black, [1, 2])
+    @board[1][3] = Pawn.new(:black, [1, 3])
+    @board[1][4] = Pawn.new(:black, [1, 4])
+    @board[1][5] = Pawn.new(:black, [1, 5])
+    @board[1][6] = Pawn.new(:black, [1, 6])
+    @board[1][7] = Pawn.new(:black, [1, 7])
   end
 
   def place_piece(piece, position)
