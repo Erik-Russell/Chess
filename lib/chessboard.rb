@@ -4,6 +4,7 @@ require_relative './pieces/rook.rb'
 require_relative './pieces/bishop.rb'
 require_relative './pieces/knight.rb'
 require_relative './pieces/queen.rb'
+require_relative './pieces/king.rb'
 #
 class ChessBoard
   attr_reader :board
@@ -51,6 +52,10 @@ class ChessBoard
     @board[7][3] = Queen.new(:white,[7, 3])
     # black queen
     @board[0][3] = Queen.new(:black,[0, 3])
+    # white king
+    @board[7][4] = King.new(:white,[7, 4])
+    # black king
+    @board[0][4] = King.new(:black,[0, 4])
   end
 
   def place_piece(piece, position)
