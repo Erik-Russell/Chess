@@ -5,5 +5,8 @@ module Utility
 
     # place piece at position
     board.place_piece(piece, position)
+
+    # show board
+    board.display
   end
 end
