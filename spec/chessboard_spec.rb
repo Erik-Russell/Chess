@@ -52,6 +52,18 @@ describe ChessBoard do
       expect(black_knight).to be_an_instance_of(Knight)
       expect(black_knight.color).to eq(:black)
     end
+
+    it 'places a white queen at d1' do
+      white_queen = board.piece_at([7, 3])
+      expect(white_queen).to be_an_instance_of(Queen)
+      expect(white_queen.color).to eq(:white)
+    end
+
+    it 'places a black queen at d8' do
+      black_queen = board.piece_at([0, 3])
+      expect(black_queen).to be_an_instance_of(Queen)
+      expect(black_queen.color).to eq(:black)
+    end
   end
 end
 
