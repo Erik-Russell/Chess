@@ -16,6 +16,8 @@ class Knight < Piece
       row, col = position
       row += dir[0]
       col += dir[1]
+
+      next unless row.between?(0, 7) && col.between?(0, 7)
       
       target_piece = board.piece_at([row, col])
 
