@@ -20,13 +20,23 @@ describe Chess do
   describe '#player_move' do
     subject(:game) { Chess.new }
 
-    it 'makes an array of valid_moves' do
+    it "moves the white queen's knight to c3" do
       position = [7, 1] # white queen's knight
-      expected_moves = [
-        [5, 0], [5, 2]
-      ]
+      destination = [5, 2] # move up and to the right
 
-      expect(game.player_move(position)).to match_array(expected_moves)
+      game.player_move(position, destination)
+
+      expect(game.board.piece_at(destination)).to be_an_instance_of(Knight)
+    end
+
+    it "does not move to an invalid destination" do
+      position = [7, 1] # white queen's knight
+      destination = [6, 3] # occupied by a white pawn
+
+      game.player_move(position, destination)
+
+      expect(game.board.piece_at(destination)).to be_an_instance_of(Pawn)
+      expect(game.board.piece_at(position)).to be_an_instance_of(Knight)
     end
   end
 
