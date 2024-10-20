@@ -84,7 +84,6 @@ class ChessBoard
 
   def piece_at(position)
     row, col = position
-    puts "Row: #{row}, Col: #{col}" # debugging
     return nil unless row.between?(0, 7)
     return nil unless col.between?(0, 7)
     @board[row][col]
