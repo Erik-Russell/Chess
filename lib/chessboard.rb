@@ -43,10 +43,10 @@ class ChessBoard
     # black bishops
     @board[0][2] = Bishop.new(:black,[0, 2])
     @board[0][5] = Bishop.new(:black,[0, 5])
-    # white bishops
+    # white knights
     @board[7][1] = Knight.new(:white,[7, 1])
     @board[7][6] = Knight.new(:white,[7, 6])
-    # black bishops
+    # black knights
     @board[0][1] = Knight.new(:black,[0, 1])
     @board[0][6] = Knight.new(:black,[0, 6])
     # white queen
@@ -84,6 +84,9 @@ class ChessBoard
 
   def piece_at(position)
     row, col = position
+    puts "Row: #{row}, Col: #{col}" # debugging
+    return nil unless row.between?(0, 7)
+    return nil unless col.between?(0, 7)
     @board[row][col]
   end
 
