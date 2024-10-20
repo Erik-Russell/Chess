@@ -15,7 +15,7 @@ describe ChessBoard do
     end
   end
 
-  describe 'place_pieces' do
+  describe '#place_pieces' do
     subject(:board) { ChessBoard.new }
     it 'places a white rook at a1' do
       white_rook1 = board.piece_at([7, 0])
@@ -81,6 +81,18 @@ describe ChessBoard do
       white_pawn = board.piece_at([6, 0])
       expect(white_pawn).to be_an_instance_of(Pawn)
       expect(white_pawn.color).to eq(:white)
+    end
+  end
+
+  describe '#move_piece' do
+    subject(:board) { ChessBoard.new }
+    it 'white pawn to a3' do
+      white_pawn = board.piece_at([6, 0])
+      board.move_piece([6, 0], [5, 0])
+      board.display
+      expect(white_pawn.position).to match_array([5, 0])
+      expect(board.board[6][0]).to eq(' ')
+      expect(board.board[5][0]).to be_an_instance_of(Pawn)
     end
   end
 end

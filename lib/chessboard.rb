@@ -86,4 +86,13 @@ class ChessBoard
     row, col = position
     @board[row][col]
   end
+
+  def move_piece(position, destination)
+    row, col = position
+    piece = piece_at(position)
+    @board[row][col] = (row + col).even? ? ' ' : '.'
+    d_row, d_col = destination
+    piece.position = [d_row, d_col]
+    @board[d_row][d_col] = piece
+  end
 end
