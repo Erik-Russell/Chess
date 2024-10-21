@@ -7,32 +7,39 @@ class Pawn < Piece
 
     if self.color == :white
       direction = [[-1, 0]]
-      attack_direction = [[-1, 1], [-1, -1]]
+      starting_row = 6
     else
       direction = [[1, 0]]
-      attack_direction = [[1, 1], [1, -1]]
+      starting_row = 1
     end
 
-    direction.each do |dir|
-      row, col = position
-      row += dir[0]
+    # Normal Move
+    forward_position = [row + direction, col]
+    target_piece = board.piece_at(forward_position)
 
-      target_piece = board.piece_at([row, col])
+    if target_piece.nil?
+      moves << forward_position
 
-      if target_piece == ' ' || target_piece == '.' || target_piece.nil?
-        moves << [row, col]
+      # Double move from starting position
+      if row == starting_row
+        double_forward_position = [row + (2 * direction), col]
+        if board.piece_at(double_forward_position).nil?
+          moves << double_forward_position
+        end
       end
     end
 
-    attack_direction.each do |a_dir|
-      row, col = position
-      row += a_dir[0]
-      col += a_dir[1]
-
-      target_piece = board.piece_at([row, col])
+    # Attack Move
+    attack_directions = [
+      [direction, 1], [direction, -1]
+    ]
+    attack_directions.each do |a_dir|
+      attack_row = row + a_dir[0]
+      attack_col = col + a_dir[1]
+      target_piece = board.piece_at([attack_row, attack_col])
 
       if target_piece.is_a?(Piece) && target_piece.color != self.color
-        moves << [row, col]
+        moves << [attack_row, attack_col]
       end
     end
 
@@ -40,10 +47,6 @@ class Pawn < Piece
   end
 
   def symbol
-    if color == :white
-      "\u2659"
-    else
-      "\u265F"
-    end
+    color == :white ? "\u2659" : "\u265F"
   end
 end
