@@ -12,9 +12,9 @@ class Chess
     @board = ChessBoard.new
   end
 
-  def player_move(move_notation)
+  def player_move(move_notation, color)
     # Parse the move notation (e.g., 'Nf3' or 'e4')
-    parsed_move = Notation.parse_move(move_notation)
+    parsed_move = Notation.parse_move(move_notation, color)
 
     # Find the piece to move and the target position
     piece = parsed_move[:piece] # 'Knight', 'Pawn', etc.

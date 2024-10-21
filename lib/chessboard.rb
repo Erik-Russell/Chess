@@ -18,6 +18,7 @@ class ChessBoard
     end
 
     place_pieces
+    @last_moved_piece = nil
   end
 
   def display
@@ -91,9 +92,28 @@ class ChessBoard
   def move_piece(position, destination)
     row, col = position
     piece = piece_at(position)
+    if piece.is_a?(Pawn)
+      @last_moved_piece = piece
+    end
     @board[row][col] = (row + col).even? ? ' ' : '.'
     d_row, d_col = destination
     piece.position = [d_row, d_col]
     @board[d_row][d_col] = piece
+  end
+
+  def can_en_passant?(pawn, target_position)
+    return false unless pawn.is_a?(Pawn)
+
+    last_pawn = @last_moved_piece
+    if last_pawn.is_a?(Pawn) && last_pawn.color != pawn.color
+      last_row = last_pawn.position[0]
+      target_row = target_position[0]
+      # Check if last pawned moved two
+      return (last_row == (pawn.color == :white ? 3 : 4)) && 
+             (target_row == (pawn.color == :white ? 4 : 3)) && 
+             (last_pawn.position[1] == target_position[1])
+    end
+
+    false
   end
 end

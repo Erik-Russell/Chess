@@ -22,7 +22,7 @@ describe Chess do
 
     it "moves the black queen Knight to c6" do
       move = 'Nc6'
-      game.player_move(move)
+      game.player_move(move, :black)
       game.board.display
 
       expect(game.board.piece_at([2, 2])).to be_an_instance_of(Knight)

@@ -44,11 +44,19 @@ describe Notation do
 
   describe '.parse_move' do
     it 'identifies a pawn move from e4' do
-      expect(Notation.parse_move('e4')).to eq({ piece: 'Pawn', target_position: [4, 4] })
+      expect(Notation.parse_move('e4', :white)).to eq({ piece: 'Pawn', target_position: [4, 4], check: false, checkmate: false })
     end
 
     it 'identifies a knight move from Nf3' do
-      expect(Notation.parse_move('Nf3')).to eq({ piece: 'Knight', target_position: [5, 5] })
+      expect(Notation.parse_move('Nf3', :white)).to eq({ piece: 'Knight', target_position: [5, 5], check: false, checkmate: false })
+    end
+
+    it 'identifies a white castling move kingside' do
+      expect(Notation.parse_move('O-O', :white)).to eq({ piece: 'King', target_position: [7, 6], castle: true })
+    end
+
+    it 'identifies a black castling move kingside' do
+      expect(Notation.parse_move('O-O', :black)).to eq({ piece: 'King', target_position: [0, 6], castle: true })
     end
   end
 end
