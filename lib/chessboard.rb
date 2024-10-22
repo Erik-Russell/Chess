@@ -8,7 +8,7 @@ require_relative './pieces/king.rb'
 require_relative './pieces/pawn.rb'
 #
 class ChessBoard
-  attr_reader :board
+  attr_reader :board, :last_moved_piece
 
   def initialize
     @board = Array.new(8) do |row|
@@ -92,26 +92,25 @@ class ChessBoard
   def move_piece(position, destination)
     row, col = position
     piece = piece_at(position)
-    if piece.is_a?(Pawn)
-      @last_moved_piece = piece
-    end
+    return unless piece
+
     @board[row][col] = (row + col).even? ? ' ' : '.'
-    d_row, d_col = destination
-    piece.position = [d_row, d_col]
-    @board[d_row][d_col] = piece
+    piece.move_to(destination)
+    place_piece(piece, destination)
+    @last_moved_piece = piece
   end
 
-  def can_en_passant?(pawn, target_position)
-    return false unless pawn.is_a?(Pawn)
+  def can_en_passant?(attacking_pawn, target_position)
+    # puts "board can check pawn:#{attacking_pawn.inspect}" #debugging
+    return false unless attacking_pawn.is_a?(Pawn)
+    return false unless attacking_pawn.color != @last_moved_piece.color
 
-    last_pawn = @last_moved_piece
-    if last_pawn.is_a?(Pawn) && last_pawn.color != pawn.color
-      last_row = last_pawn.position[0]
-      target_row = target_position[0]
-      # Check if last pawned moved two
-      return (last_row == (pawn.color == :white ? 3 : 4)) && 
-             (target_row == (pawn.color == :white ? 4 : 3)) && 
-             (last_pawn.position[1] == target_position[1])
+    start_row = @last_moved_piece.color == :white ? 6 : 1
+    if @last_moved_piece.previous_position[0] == start_row &&
+        (@last_moved_piece.position[0] - @last_moved_piece.previous_position[0]).abs == 2
+      puts "attacker:#{attacking_pawn.inspect}\nlast_moved:#{@last_moved_piece.inspect}" # debugging
+      return true if attacking_pawn.position[0] == @last_moved_piece.position[0] &&
+        (target_position[1] - @last_moved_piece.position[1]).abs == 0
     end
 
     false
