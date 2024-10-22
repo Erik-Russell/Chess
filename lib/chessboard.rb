@@ -101,7 +101,7 @@ class ChessBoard
   end
 
   def can_en_passant?(attacking_pawn, target_position)
-    # puts "board can check pawn:#{attacking_pawn.inspect}" #debugging
+    return false if @last_moved_piece.nil?
     return false unless attacking_pawn.is_a?(Pawn)
     return false unless attacking_pawn.color != @last_moved_piece.color
 
