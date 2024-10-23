@@ -6,10 +6,11 @@ require_relative './modules/notation.rb'
 class Chess
   include Notation
 
-  attr_reader :board
+  attr_reader :board, :current_turn
 
   def initialize
     @board = ChessBoard.new
+    @current_turn = :white
   end
 
   def player_move(move_notation, color)
@@ -69,6 +70,25 @@ class Chess
 
     @board.move_piece(king_pos, king_target)
     @board.move_piece(rook_pos, rook_target)
+  end
+
+  def play
+    loop do
+      @board.display
+      puts "#{@current_turn.capitalize}:s turn. Enter your move (e.g., 'e4', 'Nf3', 'O-O'):"
+      move_notation = gets.chomp
+
+      begin
+        player_move(move_notation, @current_turn)
+        switch_turn
+      rescue => e
+        puts "Error: #{e.message}. Please try again."
+      end
+    end
+  end
+
+  def switch_turn
+    @current_turn = @current_turn == :white ? :black : :white
   end
 
   private
