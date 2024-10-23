@@ -47,13 +47,7 @@ module Notation
   end
 
   def self.parse_castle(notation, color)
-    piece = 'King'
-    if color == :white
-      target_position = notation == "O-O" ? [7, 6] : [7, 2]  # White positions
-    else
-      target_position = notation == "O-O" ? [0, 6] : [0, 2]  # Black positions
-    end
-    { piece: piece, target_position: target_position, castle: true }
+    notation == 'O-O' ? { move_type: :castling, side: :kingside } : { move_type: :castling, side: :queenside }
   end
 
   def self.parse_en_passant(notation, color)
