@@ -52,4 +52,74 @@ describe Chess do
       end
     end
   end
+
+  describe 'Castling' do
+    let(:game) { Chess.new }
+
+    context 'when castling kindside' do
+      it 'allows kingside castling if conditions are met' do
+        # move pieces out of way
+        game.board.move_piece([7, 5], [5, 5])
+        game.board.move_piece([7, 6], [5, 6])
+
+        game.board.display
+
+        expect(game.board.piece_at([7, 4]).can_castle?(game.board, [7, 7])).to be true
+
+        game.player_move("O-O", :white)
+
+        game.board.display
+
+        expect(game.board.piece_at([7, 6])).to be_an_instance_of(King)
+        expect(game.board.piece_at([7, 5])).to be_an_instance_of(Rook)
+      end
+    end
+
+    context 'when castling queenside' do
+      it 'allows queenside castling if conditions are met' do
+        # Ensure there are no pieces between the king and rook
+        game.board.move_piece([7, 3], [5, 3]) # Clear space for testing
+        game.board.move_piece([7, 2], [5, 2])
+        game.board.move_piece([7, 1], [5, 1])
+
+        game.board.display
+
+        expect(game.board.piece_at([7, 4]).can_castle?(game.board, [7, 0])).to be true
+
+        # Perform the castling move
+        game.player_move("O-O-O", :white)
+
+        game.board.display
+
+        # Check positions after castling
+        expect(game.board.piece_at([7, 2])).to be_a(King)
+        expect(game.board.piece_at([7, 3])).to be_a(Rook)
+      end
+    end
+
+    context 'when castling conditions are not met' do
+      it 'does not allow castling if the king or rook has moved' do
+        game.board.move_piece([7, 3], [5, 3]) # Clear space for testing
+        game.board.move_piece([7, 2], [5, 2])
+        game.board.move_piece([7, 1], [5, 1])
+
+        king = game.board.piece_at([7, 4])
+        king.move_to([7, 3])
+        king.move_to([7, 4])
+
+        expect(king.can_castle?(game.board, [7, 0])).to be false
+      end
+
+      it 'does not allow castling if a square is under attack' do
+        game.board.move_piece([7, 3], [5, 3]) # Clear space for testing
+        game.board.move_piece([7, 2], [5, 2])
+        game.board.move_piece([7, 1], [5, 1])
+        game.board.move_piece([0, 0], [6, 2])
+
+        puts game.board.display
+
+        expect(game.board.piece_at([7, 4]).can_castle?(game.board, [7, 0])).to be false
+      end
+    end
+  end
 end
