@@ -115,4 +115,20 @@ class ChessBoard
 
     false
   end
+
+  def square_under_attack?(position, color)
+    opposing_color = color == :white ? :black : :white
+
+    @board.each do |row|
+      row.each do |piece|
+        next if piece.nil? || piece == ' ' || piece == '.' || piece.color == color
+
+        if piece.valid_moves(self).include?(position)
+          return true
+        end
+      end
+    end
+
+    false
+  end
 end
