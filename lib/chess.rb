@@ -20,7 +20,7 @@ class Chess
     piece = parsed_move[:piece] # 'Knight', 'Pawn', etc.
     destination = parsed_move[:target_position] # [x, y] coordinates
 
-    puts "Parced Piece:#{piece}, destination:#{destination}"
+    puts "Parced Piece:#{piece}, destination:#{destination}" # debugging
 
     # Find the actual piece to move based on the type and board
     # You may need to enhance this to check for the player's color, etc.
