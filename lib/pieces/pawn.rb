@@ -24,7 +24,6 @@ def valid_moves(board)
 
     # Attack moves and en passant check
     attack_directions.each do |dir|
-      puts 'attack check' # debugging
       attack_position = [position[0] + dir[0], position[1] + dir[1]]
       target_piece = board.piece_at(attack_position)
 
@@ -35,9 +34,6 @@ def valid_moves(board)
       # En Passant Check
       if board.can_en_passant?(self, attack_position)
         moves << attack_position
-
-        puts 'en passant' # debugging
-
       end
     end
 
