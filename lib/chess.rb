@@ -16,6 +16,27 @@ class Chess
     # Parse the move notation (e.g., 'Nf3' or 'e4')
     parsed_move = Notation.parse_move(move_notation, color)
 
+    # Handle castling moves
+    if parsed_move[:move_type] == :castling
+      if parsed_move[:side] == :kingside
+        king_pos = color == :white ? [7, 4] : [0, 4]
+        rook_pos = color == :white ? [7, 7] : [0, 7]
+      else
+        king_pos = color == :white ? [7, 4] : [0, 4]
+        rook_pos = color == :white ? [7, 0] : [0, 0]
+      end
+
+      king = @board.piece_at(king_pos)
+      if king.is_a?(King) && king.can_castle?(@board, rook_pos)
+        # Perform the castling move
+        perform_castling(king_pos, rook_pos)
+        return
+      else
+        puts "Invalid castling move."
+        return
+      end
+    end
+
     # Find the piece to move and the target position
     piece = parsed_move[:piece] # 'Knight', 'Pawn', etc.
     destination = parsed_move[:target_position] # [x, y] coordinates
@@ -39,6 +60,15 @@ class Chess
     else
       puts "No valid piece found for this move."
     end
+  end
+
+  def perform_castling(king_pos, rook_pos)
+    row = king_pos[0]
+    king_target = rook_pos[1] == 7 ? [row, 6] : [row, 2]
+    rook_target = rook_pos[1] == 7 ? [row, 5] : [row, 3]
+
+    @board.move_piece(king_pos, king_target)
+    @board.move_piece(rook_pos, rook_target)
   end
 
   private
